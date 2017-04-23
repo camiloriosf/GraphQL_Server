@@ -27,7 +27,7 @@ mongoose.connection
 // on the users cookie.  When a user makes a request, this middleware examines
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
-// is stored inside of MongoDB.
+// is stored inside of MongoDB.s
 app.use(session({
   resave: true,
   saveUninitialized: true,

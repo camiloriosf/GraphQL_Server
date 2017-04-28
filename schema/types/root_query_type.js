@@ -1,17 +1,20 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLID } = graphql;
-const UserType = require('./user_type');
+const {
+  GraphQLObjectType
+} = graphql;
+const user = require('./queries/user');
+const company = require('./queries/company.js')
+const project = require('./queries/project.js')
 
-const RootQueryType = new GraphQLObjectType({
-  name: 'RootQueryType',
-  fields: {
-    user: {
-      type: UserType,
-      resolve(parentValue, args, req) {
-        return req.user;
-      }
-    }
+const rootFields = Object.assign({},
+  {
+    user,
+    company,
+    project
   }
-});
+);
 
-module.exports = RootQueryType;
+module.exports = new GraphQLObjectType({
+  name: 'RootQueryType',
+  fields: () => rootFields
+});

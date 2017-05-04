@@ -1,6 +1,5 @@
 const graphql = require('graphql');
 const { GraphQLObjectType } = graphql;
-const signup = require('./authentication/signup');
 const login = require('./authentication/login');
 const companyAdd = require('./company/add');
 const companyRename = require('./company/rename');
@@ -29,7 +28,6 @@ const memoryActivateBranch = require('./memory/activateBranch');
 
 const rootFields = Object.assign({},
   {
-    signup,
     login,
     companyAdd,
     companyRename,

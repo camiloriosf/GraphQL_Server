@@ -4,6 +4,7 @@ const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const schema = require('./schema/schema');
+const { allowDevice } = require('./RESTful/api');
 
 const app = express();
 
@@ -13,8 +14,8 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(MONGO_URI);
 mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
-    .on('error', error => console.log('Error connecting to MongoLab:', error));
+  .once('open', () => console.log('Connected to MongoLab instance.'))
+  .on('error', error => console.log('Error connecting to MongoLab:', error));
 
 app.use(passport.initialize());
 
@@ -23,6 +24,8 @@ app.use('/graphql', expressGraphQL({
   graphiql: true
 }));
 
-app.listen(process.env.PORT || 4000, () => {
+app.get('/confirm', allowDevice)
+
+app.listen(process.env.PORT || 4001, () => {
   console.log('Listening');
 });

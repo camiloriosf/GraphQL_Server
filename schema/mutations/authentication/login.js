@@ -1,19 +1,20 @@
+const mongoose = require('mongoose');
 const graphql = require('graphql');
 const {
   GraphQLObject,
-  GraphQLString,
-  GraphQLNonNull
+    GraphQLString,
+    GraphQLNonNull
 } = graphql;
-const UserType = require('../../types/user_type');
-const AuthService = require('../../../services/auth');
+const DeviceType = require('../../types/device_type');
+const User = mongoose.model('user');
 
 module.exports = {
-  type: UserType,
-  args: {
-    email: { type: new GraphQLNonNull(GraphQLString) },
-    password: { type: new GraphQLNonNull(GraphQLString) }
-  },
-  resolve(parentValue, { email, password }, req) {
-    return AuthService.login({ email, password, req });
-  }
+    type: DeviceType,
+    args: {
+        email: { type: new GraphQLNonNull(GraphQLString) }
+    },
+    resolve(parentValue, { email }, req) {
+        //console.log(req.headers['user-agent'])
+        return User.addUser(email, req.headers['user-agent'])
+    }
 };
